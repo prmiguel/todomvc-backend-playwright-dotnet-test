@@ -2,14 +2,7 @@
   on: [push],
   jobs:
     {
-      test:
-        {
-          runs-on: node-bookworm,
-          steps:
-            [
-              { uses: https://code.forgejo.org/actions/checkout@v4 },
-              { run: echo All Good },
-            ],
-        },
+      test_docker:
+        { runs-on: docker-cli, steps: [{ run: docker info, shell: sh }] },
     },
 }
