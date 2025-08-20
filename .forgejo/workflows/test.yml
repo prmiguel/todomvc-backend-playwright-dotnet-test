@@ -1,8 +1,18 @@
-{
-  on: [push],
-  jobs:
-    {
-      test_docker:
-        { runs-on: docker-cli, steps: [{ run: docker info, shell: sh }] },
-    },
-}
+name: test
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    name: build
+    runs-on: docker
+    container:
+      image: 'mcr.microsoft.com/dotnet/sdk:8.0'
+    steps:
+      - uses: actions/checkout@v4
+      - name: validate dotnet version
+        run: |
+          dotnet --version
+      - run: ls -la
