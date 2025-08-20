@@ -9,7 +9,7 @@ jobs:
     name: build
     runs-on: docker-cli
     container:
-      image: 'mcr.microsoft.com/dotnet/sdk:8.0'
+      image: 'dotnetimages/microsoft-dotnet-core-sdk-nodejs:8.0_23.x'
     steps:
       - uses: https://data.forgejo.org/actions/checkout@v4
         with:
