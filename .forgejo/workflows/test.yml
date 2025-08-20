@@ -19,3 +19,4 @@ jobs:
         run: |
           dotnet --version
       - run: ls -la
+      - run: dotnet build src/TodoMvc.Backend.Playwright.sln
