@@ -9,8 +9,13 @@ jobs:
     name: build
     runs-on: docker-cli
     container:
-      image: 'dotnetimages/microsoft-dotnet-core-sdk-nodejs:8.0_23.x'
+      image: 'mcr.microsoft.com/playwright/dotnet:v1.54.0-noble'
     steps:
+      - name: Setup
+        run: |
+          apt update
+          apt install nodejs -y
+          apt install npm -y
       - uses: https://data.forgejo.org/actions/checkout@v4
         with:
           fetch-depth: '0'
@@ -19,4 +24,9 @@ jobs:
         run: |
           dotnet --version
       - run: ls -la
-      - run: dotnet build src/TodoMvc.Backend.Playwright.sln
+      - name: Build version
+        run: |
+          cd src
+          dotnet restore
+          dotnet build
+          dotnet publish -c release --no-restore
