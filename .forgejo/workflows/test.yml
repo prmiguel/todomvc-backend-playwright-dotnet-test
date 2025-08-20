@@ -11,6 +11,10 @@ jobs:
     container:
       image: 'mcr.microsoft.com/dotnet/sdk:8.0'
     steps:
+      - uses: https://data.forgejo.org/actions/checkout@v4
+        with:
+          fetch-depth: '0'
+          show-progress: 'false'
       - name: validate dotnet version
         run: |
           dotnet --version
