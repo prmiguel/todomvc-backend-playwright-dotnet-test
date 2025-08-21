@@ -10,7 +10,7 @@ jobs:
     runs-on: docker
     container:
       image: 'mcr.microsoft.com/playwright/dotnet:v1.52.0-noble'
-      options: --network ci_default
+      options: '--network ci_default --link forgejo'
     steps:
       - name: Setup
         run: |
