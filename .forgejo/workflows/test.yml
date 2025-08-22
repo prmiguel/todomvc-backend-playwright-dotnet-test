@@ -27,6 +27,6 @@ jobs:
       - name: Build version
         run: |
           cd src
-          dotnet restore --verbosity
+          dotnet restore --disable-parallel
           dotnet build
           dotnet publish -c release --no-restore
