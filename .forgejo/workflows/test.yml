@@ -27,6 +27,6 @@ jobs:
       - name: Build version
         run: |
           cd src
-          dotnet restore
+          dotnet restore --verbosity
           dotnet build
           dotnet publish -c release --no-restore
