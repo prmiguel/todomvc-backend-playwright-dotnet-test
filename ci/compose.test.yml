@@ -2,8 +2,8 @@ services:
 
   workflow:
     image: code.forgejo.org/oci/alpine:3.22
-    links:
-      - forgejo
+    networks:
+      - ci
     command: >-
       sh -ec '
       apk add --quiet git curl jq ;
