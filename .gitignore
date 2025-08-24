@@ -1,1 +1,4 @@
 status
+**/.idea
+**/bin
+**/obj
