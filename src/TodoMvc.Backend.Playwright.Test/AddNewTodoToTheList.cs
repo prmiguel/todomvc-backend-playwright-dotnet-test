@@ -10,6 +10,8 @@ namespace TodoMvc.Backend.Playwright.Test;
 public class AddNewTodoToTheList : TodoBaseTest
 {
     [TestMethod]
+    [TestCategory("smoke")]
+    [Priority(1)]
     public async Task ShouldBeAddedTheNewItem()
     {
         // Arrange
