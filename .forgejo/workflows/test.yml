@@ -10,6 +10,11 @@ on:
         required: true
         default: 'https://csharp-todo-backend.azurewebsites.net'
         type: string
+      testFilter:
+        description: 'Test Filter'
+        required: false
+        default: ''
+        type: string
 
 env:
   TEST_api__baseUrl: ${{ inputs.apiBaseUrl }}
@@ -35,4 +40,4 @@ jobs:
           dotnet restore TodoMvc.Backend.Playwright.sln --disable-parallel --ignore-failed-sources
           dotnet build
           dotnet publish -c release --no-restore
-          dotnet test
+          dotnet test --filter "${{ inputs.testFilter }}"
