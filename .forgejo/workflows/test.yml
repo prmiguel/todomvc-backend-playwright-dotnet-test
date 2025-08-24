@@ -8,7 +8,7 @@ on:
       apiBaseUrl:
         description: 'API Base URL'
         required: true
-        default: '100'
+        default: 'https://csharp-todo-backend.azurewebsites.net'
         type: string
 
 env:
