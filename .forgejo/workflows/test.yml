@@ -1,8 +1,5 @@
-name: test
+name: Test
 on:
-  # push:
-  #   branches:
-  #     - 'main'
   workflow_dispatch:
     inputs:
       apiBaseUrl:
@@ -21,7 +18,7 @@ env:
 
 jobs:
   build:
-    name: build
+    name: Run Tests
     runs-on: docker-cli
     container:
       image: 'mcr.microsoft.com/playwright/dotnet:v1.52.0-noble'

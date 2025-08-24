@@ -1,0 +1,26 @@
+name: Build
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    name: build
+    runs-on: docker-cli
+    container:
+      image: 'mcr.microsoft.com/playwright/dotnet:v1.52.0-noble'
+    steps:
+      - name: Setup
+        run: |
+          apt update
+          apt install -y nodejs npm
+      - uses: https://data.forgejo.org/actions/checkout@v4
+        with:
+          fetch-depth: '0'
+          show-progress: 'false'
+      - name: Build
+        run: |
+          cd src
+          dotnet restore TodoMvc.Backend.Playwright.sln --disable-parallel --ignore-failed-sources
+          dotnet build
