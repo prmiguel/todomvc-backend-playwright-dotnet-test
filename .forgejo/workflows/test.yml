@@ -38,7 +38,7 @@ jobs:
           dotnet build
           dotnet publish -c release --no-restore
           dotnet test --filter "${{ inputs.testFilter }}" --logger:"html;LogFileName=index.html" --results-directory:./TestReport
-      - uses: actions/upload-artifact@v3
+      - uses: https://code.forgejo.org/actions/upload-artifact@v4
         with:
           name: TestReport
           path: src/TestReport/index.html
