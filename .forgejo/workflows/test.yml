@@ -23,22 +23,24 @@ jobs:
     container:
       image: 'mcr.microsoft.com/playwright/dotnet:v1.52.0-noble'
     steps:
-      - name: Setup
+      - name: Setup Environment
         run: |
           apt update
           apt install -y nodejs npm
-      - uses: https://data.forgejo.org/actions/checkout@v4
+      - name: Get code
+        uses: https://data.forgejo.org/actions/checkout@v4
         with:
           fetch-depth: '0'
           show-progress: 'false'
-      - name: Build version
+      - name: Run Tests
         run: |
           cd src
           dotnet restore TodoMvc.Backend.Playwright.sln --disable-parallel --ignore-failed-sources
           dotnet build
           dotnet publish -c release --no-restore
           dotnet test --filter "${{ inputs.testFilter }}" --logger:"html;LogFileName=index.html" --results-directory:./TestReport
-      - uses: https://code.forgejo.org/actions/upload-artifact@v4
+      - name: Upload Test Report
+        uses: https://code.forgejo.org/actions/upload-artifact@v4
         with:
           name: TestReport
           path: src/TestReport/index.html
