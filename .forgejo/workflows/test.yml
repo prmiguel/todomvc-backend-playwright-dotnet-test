@@ -37,4 +37,8 @@ jobs:
           dotnet restore TodoMvc.Backend.Playwright.sln --disable-parallel --ignore-failed-sources
           dotnet build
           dotnet publish -c release --no-restore
-          dotnet test --filter "${{ inputs.testFilter }}"
+          dotnet test --filter "${{ inputs.testFilter }}" --logger:"html;LogFileName=index.html" --results-directory:./TestReport
+      - uses: actions/upload-artifact@v3
+        with:
+          name: TestReport
+          path: src/TestReport/index.html
