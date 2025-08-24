@@ -33,6 +33,8 @@ services:
       FORGEJO__repository__ENABLE_PUSH_CREATE_USER: "true"
       FORGEJO__repository__DEFAULT_PUSH_CREATE_PRIVATE: "false"
       FORGEJO__repository__DEFAULT_REPO_UNITS: "repo.code,repo.actions"
+      FORGEJO__server__ROOT_URL: "http://forgejo:3000/"
+      FORGEJO__ui__THEMES: "forgejo-dark"
     volumes:
       - forgejo_data:/data
     ports:
