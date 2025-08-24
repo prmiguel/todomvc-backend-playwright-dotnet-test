@@ -1,11 +1,18 @@
 name: test
 on:
-  push:
-    branches:
-      - 'main'
+  # push:
+  #   branches:
+  #     - 'main'
+  workflow_dispatch:
+    inputs:
+      apiBaseUrl:
+        description: 'API Base URL'
+        required: true
+        default: '100'
+        type: string
 
 env:
-  TEST_api__baseUrl: https://csharp-todo-backend.azurewebsites.net
+  TEST_api__baseUrl: ${{ inputs.apiBaseUrl }}
 
 jobs:
   build:
