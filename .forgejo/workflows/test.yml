@@ -42,6 +42,4 @@ jobs:
       - name: Upload Test Report
         uses: https://code.forgejo.org/actions/upload-artifact@v3
         with:
-          name: TestReport
           path: src/TestReport/index.html
-          compression-level: 0
