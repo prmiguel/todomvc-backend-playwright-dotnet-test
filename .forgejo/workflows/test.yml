@@ -4,6 +4,9 @@ on:
     branches:
       - 'main'
 
+env:
+  TEST_api__baseUrl: https://csharp-todo-backend.azurewebsites.net
+
 jobs:
   build:
     name: build
