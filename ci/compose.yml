@@ -2,6 +2,7 @@ volumes:
   docker_certs:
   runner_docker_data:
   runner_dind_data:
+  forgejo_data:
 
 services:
 
@@ -33,7 +34,7 @@ services:
       FORGEJO__repository__DEFAULT_PUSH_CREATE_PRIVATE: "false"
       FORGEJO__repository__DEFAULT_REPO_UNITS: "repo.code,repo.actions"
     volumes:
-      - /srv/forgejo-data:/data
+      - forgejo_data:/data
     ports:
       - 3000:3000
 
