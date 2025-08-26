@@ -1,7 +1,2 @@
 # todomvc-backend-playwright-dotnet-test
-
-
-```sh
-docker compose -f ci/compose.yml -f ci/compose.forgejo.yml up -d
-docker compose -f ci/compose.yml -f ci/compose.forgejo.yml -f ci/compose.workflow.yml up workflow
-```
+`C#`, `MSTestV2`, `Playwright.Net`, `API Test`, `dotnet`, `TodoMvc API`, `Forgejo`, `Forgejo Runner`, `Docker` 
