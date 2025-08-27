@@ -11,6 +11,8 @@ services:
     # image: docker:dind
     hostname: docker  # Must set hostname as TLS certificates are only valid for docker or localhost
     privileged: true
+    depends_on:
+      - forgejo
     environment:
       DOCKER_TLS_CERTDIR: /certs
       DOCKER_HOST: docker-in-docker
@@ -47,6 +49,8 @@ services:
     #   - forgejo
     environment:
       DOCKER_HOST: tcp://docker-in-docker:2376
+    depends_on:
+      - forgejo
     volumes:
       - runner_dind_data:/data
     user: 0:0
@@ -72,6 +76,10 @@ services:
     # links:
     #   - docker-in-docker
     #   - forgejo
+    depends_on:
+      - forgejo
+      - runner-register
+      - docker-in-docker
     environment:
       DOCKER_HOST: tcp://docker:2376
       DOCKER_CERT_PATH: /certs/client
@@ -86,10 +94,13 @@ services:
 
   # runner-docker-register:
   #   image: code.forgejo.org/forgejo/runner:9.1.0
-  #   links:
-  #     - forgejo
+  #   # links:
+  #   #   - forgejo
   #   volumes:
   #     - runner_docker_data:/data
+  #     # - /srv:/data
+  #   depends_on:
+  #     - forgejo
   #   user: 0:0
   #   command: >-
   #     bash -ec '
@@ -100,17 +111,23 @@ services:
   #     sed -i -e "s|\"labels\": null|\"labels\": [\"docker:docker://data.forgejo.org/oci/node:20-bullseye\"]|" .runner ;
   #     forgejo-runner generate-config > config.yml ;
   #     sed -i -e "s|  level: info|  level: debug|" config.yml ;
+  #     sed -i -e "s|  docker_host: \"-\"|  docker_host: \"automount\"|" config.yml ;
+  #     sed -i -e "s|network: .*|network: ci_ci|" config.yml ;
   #     chown -R 1000:1000 /data
   #     '
 
   # runner-docker-daemon:
   #   image: code.forgejo.org/forgejo/runner:9.0.1
   #   privileged: true
-  #   links:
+  #   user: root:root
+  #   depends_on:
   #     - runner-docker-register
-  #     - forgejo
+  #   # links:
+  #   #   - runner-docker-register
+  #   #   - forgejo
   #   volumes:
   #     - runner_docker_data:/data
+  #     # - /srv:/data
   #     - /var/run/docker.sock:/var/run/docker.sock
   #   command: >-
   #     bash -c '

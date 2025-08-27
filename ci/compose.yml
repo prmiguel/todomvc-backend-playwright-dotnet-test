@@ -12,6 +12,12 @@ services:
   runner-daemon:
     networks:
       - ci
+  # runner-docker-register:
+  #   networks:
+  #     - ci
+  # runner-docker-daemon:
+  #   networks:
+  #     - ci
 
 networks:
   ci:
