@@ -1,5 +1,17 @@
 tasks:
+  - name: deploy-forgejo
   - before: |
       docker compose -f ci/compose.yml -f ci/compose.forgejo.yml up -d
       sleep 20
       docker compose -f ci/compose.yml -f ci/compose.forgejo.yml -f ci/compose.workflow.yml up workflow
+  - name: forgejo-runner
+    before: |
+      export RUNNER_VERSION=$(curl -X 'GET' https://data.forgejo.org/api/v1/repos/forgejo/runner/releases/latest | jq .name -r | cut -c 2-)
+      wget -O forgejo-runner https://code.forgejo.org/forgejo/runner/releases/download/v${RUNNER_VERSION}/forgejo-runner-${RUNNER_VERSION}-linux-amd64
+      chmod +x forgejo-runner
+      wget -O forgejo-runner.asc https://code.forgejo.org/forgejo/runner/releases/download/v${RUNNER_VERSION}/forgejo-runner-${RUNNER_VERSION}-linux-amd64.asc
+      gpg --keyserver keys.openpgp.org --recv EB114F5E6C0DC2BCDD183550A4B61A2DC5923710
+      gpg --verify forgejo-runner.asc forgejo-runner
+      sudo cp forgejo-runner /usr/local/bin/forgejo-runner
+      forgejo-runner -v
+      rm forgejo-runner*
