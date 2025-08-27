@@ -4,7 +4,7 @@ tasks:
       docker compose -f ci/compose.yml -f ci/compose.forgejo.yml up -d
       sleep 20
       docker compose -f ci/compose.yml -f ci/compose.forgejo.yml -f ci/compose.workflow.yml up workflow
-  - name: forgejo-runner
+  - name: forgejo-runner-locally
     before: |
       export RUNNER_VERSION=$(curl -X 'GET' https://data.forgejo.org/api/v1/repos/forgejo/runner/releases/latest | jq .name -r | cut -c 2-)
       wget -O forgejo-runner https://code.forgejo.org/forgejo/runner/releases/download/v${RUNNER_VERSION}/forgejo-runner-${RUNNER_VERSION}-linux-amd64
@@ -15,3 +15,5 @@ tasks:
       sudo cp forgejo-runner /usr/local/bin/forgejo-runner
       forgejo-runner -v
       rm forgejo-runner*
+    command: |
+      forgejo-runner exec --workflows .forgejo/workflows/build.yml
